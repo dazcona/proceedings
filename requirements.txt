@@ -1,0 +1,7 @@
+Flask
+Flask-Bootstrap
+pymongo
+Unidecode
+PyPDF2
+wordcloud
+matplotlib

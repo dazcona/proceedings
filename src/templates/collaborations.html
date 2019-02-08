@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+    {{super()}}
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Styles -->
+    <style>
+    #map {
+        height: 700px;
+    }
+    </style>
+{% endblock %}
+
+{% block page_content %}
+
+    <div id="map"></div>
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+    <script>
+
+        // Load the tile images from OpenStreetMap
+        var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        // Initialise an empty map
+        var map = L.map('map');
+        
+        // Marks (Universities)
+
+        $.getJSON("/geodata/", function(data) {
+
+            var style = {
+                radius: 5,
+				fillColor: "blue",
+				color: "#000",
+				weight: 3,
+				opacity: 1,
+				fillOpacity: 0.8
+            }
+        
+            var geojson = L.geoJson(data, {
+                
+                // Markers
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, style);
+                },
+
+                // Popups
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.name) {
+                        layer.bindPopup(feature.properties.name);
+                    }
+                }
+            });
+
+            geojson.addTo(map)
+        });
+
+        // Lines (Collaborations)
+
+        $.getJSON("/collabdata/", function(data) {
+
+            var geojson = L.geoJson(data, {
+
+                // Popups
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.name) {
+                        layer.bindPopup(feature.properties.name);
+                    }
+                }
+            });
+
+            geojson.addTo(map)
+        });
+
+        var asu = {
+                "type": "Feature",
+                "properties": {
+                    "popupContent": "LAK 2019's Host: Arizona State University"
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-111.9280527, 33.4242399]
+                }
+            };
+
+        // ICON
+
+        var icon = L.icon({
+            iconUrl: 'icon',
+            iconSize: [32, 32],
+            iconAnchor: [16, 37],
+            popupAnchor: [0, -28]
+        });
+
+        var layer = L.geoJson(asu, {
+
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: icon });
+            },
+            
+        });
+        
+        // Add Icon
+        //layer.addTo(map);
+
+        // Add the tiles to the map, and initialise the view in the middle of Europe
+        map.addLayer(mytiles).setView([35, 5.0], 2);
+
+    </script>
+
+{% endblock %}

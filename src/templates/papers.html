@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+	<h1 class="page-header">Papers</h1>
+
+    <table class="table table-bordered table-hover" >
+    <tr>
+        <th style="text-align:center"> ID </th>
+        <th style="text-align:center"> Type </th>
+        <th style="text-align:center"> Title </th>
+        <th style="text-align:center"> Authors </th>
+        <th style="text-align:center"> Emails </th>
+    </tr>
+
+    {% for paper in papers %}
+
+        <tr align="center">
+            <td> {{ paper.number }} </td>
+            <td> {{ paper.type }} </td>
+            <td> {{ paper.title }} </td>
+            <td align="left"> <ul>
+                {% for item in paper.author_names %} <li> {{ item.split(':') | join(': ') }} </li> {% endfor %}
+            </ul> </td>
+            <td align="left"> <ul>
+                {% for item in paper.author_emails %} <li> {{ item }} </li> {% endfor %}
+            </ul> </td>
+        </tr>
+
+    {% endfor %}
+
+    </table>
+
+{% endblock %}

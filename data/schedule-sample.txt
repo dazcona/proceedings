@@ -1,0 +1,4 @@
+# MONDAY
+
+Machine Learning I. Session 1A
+user2code2vec: embeddings for profiling students based on distributional representations of source code; David Azcona, Piyush Arora, Sharon Hsiao and Alan Smeaton.
