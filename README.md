@@ -6,6 +6,12 @@ This template was used to develop the Proceedings for the 9th International Lear
 
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fdazcona%2Fproceedings)
 
+## Contributors
+
+* [David Azcona](https://computing.dcu.ie/~dazcona/)
+* [Vitomir Kovanovic](https://vitomir.kovanovic.info/) developed the scripts used to check the correctness of a PDF for ACM Proceedings and helped me throughtout the process with tricks and tips.
+* [Abelardo Pardo](http://people.unisa.edu.au/Abelardo.Pardo) originally developed the scripts and workflow.
+
 ## Technologies
 
 * Python 3
